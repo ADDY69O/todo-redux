@@ -1,9 +1,12 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 
 const CompletedTodo = (props) => {
     if(!props.item){
         return null;
     }
+
+ 
 
     const dateString = props.item.date.toString() ;
   return (

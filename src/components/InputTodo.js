@@ -1,4 +1,6 @@
     import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo } from '../Redux/Reducers/todo';
     import ActiveTask from './ActiveTask';
 import CompletedTodo from './CompletedTodo';
 
@@ -8,14 +10,28 @@ import CompletedTodo from './CompletedTodo';
     const [category, setCategory] = useState('general');
     const [completed, setCompleted] = useState([])
     const [task, setTask] = useState([]);
+    const todos = useSelector(state=>state.todo.todos)
+    const completedtodos = useSelector(state=>state.todo.completed)
+    const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     console.log("useEffect called")
+    // }, [todos.length])
+    
+
 
     const handleSubmit = () => {
         const currentDate = new Date();
-        setTask([...task, { title, Description, category, date: currentDate }]);
+        // setTask([...task, { title, Description, category, date: currentDate }]);
+        dispatch(addTodo({title,Description,category,date:currentDate.toISOString()}))
+        // setTitle('')
+        // setDescription('')
+        // setCategory('')
+    
     };
 
     const handleTaskCompleted=(ipTask)=>{
-        setCompleted([...completed,ipTask])
+        // setCompleted([...completed,ipTask])
 
         const newTask = task.filter((item)=>item!==ipTask);
 
@@ -81,15 +97,15 @@ import CompletedTodo from './CompletedTodo';
 
         <h1 className='text-4xl mt-8 mb-4'>Active Tasks</h1>
         <div className='flex flex-wrap'>
-            {task &&
-            task.map((item) => (
-                <ActiveTask key={item.date} item={item} handleTaskCompleted={handleTaskCompleted} />
+            {todos &&
+            todos.map((item) => (
+                <ActiveTask key={item.id} item={item}  />
             ))}
         </div>
         <h1 className='text-4xl mt-8 mb-4'>Completed Tasks</h1>
         <div className='flex flex-wrap'>
-            {completed &&
-            completed.map((item) => (
+            {completedtodos &&
+            completedtodos.map((item) => (
                 <CompletedTodo key={item.date} item={item}  />
             ))}
         </div>
