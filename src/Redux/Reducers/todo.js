@@ -28,7 +28,7 @@ export const todoSlice=createSlice({
         state.todos=remTodo;
 
             if(!removeTo){
-                console.log("error while finding");
+                console.log("error while finding things");
             }
             if(removeTo){
             state.completed.push(removeTo)
